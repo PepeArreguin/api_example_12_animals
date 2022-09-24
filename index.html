@@ -38,9 +38,29 @@
     <!-- CONTENIDO DE TU PAGINA -->
     <div class="container">
         <h1>Animales Zoo</h1>
-        <div class="row">
+
+        <div class="row" id="loaderContainer">
+            <div class="col-md-12 text-center">
+                <div class="lds-ring">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                </div>
+                <p>Cargando...</p>
+
+            </div>
+        </div>
+
+
+        
+
+        <div class="row d-none" id="rowContainer">
             <div class="col-md-12">
-                
+                <h2>Gráfica</h2>
+                <canvas id="myChart" width="400" height="400"></canvas>
+            </div>
+            <div class="col-md-12">              
                 <table class="table">
                     <thead class="thead-dark">
                       <tr>
@@ -95,4 +115,5 @@
     </footer>
 </body>
 <script src="assets/js/main.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
 </html>

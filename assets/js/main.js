@@ -2,6 +2,11 @@ console.log("Entro al main.js");
 
 const base_url_api = "http://ucamp.alumnos.dev4humans.com.mx/Main/endpoint_animales_zoo";
 const tblAnimales = document.getElementById("tblAnimales");
+const grafica = document.getElementById('myChart').getContext('2d');
+
+//loader
+const loadContainer = document.getElementById("loadContainer");
+const rowContainer = document.getElementById("rowContainer");
 
 function cargarAnimales () {
 //Es una promesa
@@ -15,6 +20,38 @@ fetch(base_url_api + "/Main/animales",
     console.log(result);
     tblUsuarios.innerHTML = "";
     //hacer un ciclo para que pinte en la tabla, es mas comodo hacer un for of
+    // Aqui va ir el codigo de la grafica
+    let labels_for_chart = result.data.map((item) => {
+            return item.nombre.toUpperCase();
+        });
+        let data_for_chart = result.data.map((item) => {
+            return item.cantidad;
+        });
+
+        const myChart = new Chart(grafica, {
+            type: 'line',
+            data: {
+                labels: labels_for_chart,
+                datasets: [
+                    {
+                        label: 'Animales del zoo',
+                        data: data_for_chart,
+                        fill: true,
+                        backgroundColor: '#ccd9ff',
+                        borderColor: '#3366ff'
+                    },
+                ]
+            },
+
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
     for (const usuario of result.data) {
         let tr = `<tr>
         <td>${usuario.id}</td>
@@ -26,6 +63,9 @@ fetch(base_url_api + "/Main/animales",
     if (result.data.length == 0){
         tblUsuarios.innerHTML = `<tr><td colspan = "5" class= "text-center">No Hay usuarios</td></tr>`
     }
+
+    loaderContainer.classList.add("d-none");
+    rowContainer.classList.remove("d-none");
 
 })
   .catch((error) => {
